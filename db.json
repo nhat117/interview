@@ -1,0 +1,40 @@
+{
+	"messages": [
+		{
+			"id": "m1",
+			"content": "Hello",
+			"timestamp": "10-30-2022",
+			"sender": "A"
+		},
+		{
+			"id": "m2",
+			"content": "First message from A",
+			"timestamp": "10-30-2022",
+			"sender": "A"
+		},
+		{
+			"id": "m3",
+			"content": "Second message from A",
+			"timestamp": "10-30-2022",
+			"sender": "A"
+		},
+		{
+			"id": "m4",
+			"content": "B",
+			"timestamp": "10-30-2022",
+			"sender": "B"
+		},
+		{
+			"id": "m5",
+			"content": "B1",
+			"timestamp": "10-30-2022",
+			"sender": "B"
+		},
+		{
+			"id": "m6",
+			"content": "A reply",
+			"timestamp": "10-31-2022",
+			"sender": "A"
+		}
+	]
+}
