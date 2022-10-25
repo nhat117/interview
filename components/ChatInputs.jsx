@@ -1,15 +1,17 @@
 import React from "react";
+import StyledButton from "./StyledButton";
+import { StyledInput } from "./StyledTextInput";
 
 const ChatInputs = (props) => {
 	return (
 		<form onSubmit={(e) => props.handleSendMessage(e)}>
-			<input
+			<StyledInput
 				type='text'
 				value={props.sendMessage}
 				onChange={props.onMessageChange}
 				placeholder='Type your message here'
 			/>
-			<button type='submit'>Send</button>
+			<StyledButton type='submit'>Send</StyledButton>
 		</form>
 	);
 };

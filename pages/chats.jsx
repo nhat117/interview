@@ -1,19 +1,45 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, {
+	useContext,
+	useEffect,
+	useState,
+	useRef,
+	useCallback,
+} from "react";
 import axios from "axios";
 import ChatCells from "../components/ChatCells";
 import ChatInputs from "../components/ChatInputs";
+import useChats from "../hooks/useChats";
+import StyledChatCells from "../components/StyledChatCells";
 
 const path = "http://localhost:3000/messages";
 
 const chats = () => {
 	const [messages, setMessages] = useState([]);
 	const [sendMessage, setSendMessage] = useState("");
-    const divRef = useRef(null);
-    
-    useEffect(() => {
-        divRef.current.scrollIntoView({ behavior: 'smooth' });
-    });
+	const [position, setPosition] = useState(0);
+	const { displayChats, hasMore, loading } = useChats(messages, position);
+	const divRef = useRef(null);
+	const observer = useRef();
 
+	const lastChatRef = useCallback(
+		(node) => {
+			if (loading) return;
+			if (observer.current) observer.current.disconnect();
+			observer.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting && hasMore) {
+					setPosition((prevPosition) => prevPosition + 5);
+				}
+			});
+			if (node) observer.current.observe(node);
+		},
+		[loading, hasMore]
+	);
+
+
+	useEffect(() => {
+		divRef.current.scrollIntoView({ behavior: "smooth" });
+		// setAccuCount(messages.length - accuCount);
+	});
 
 	const fetchMessages = async () => {
 		const tmpMsg = localStorage.getItem("messages");
@@ -21,7 +47,7 @@ const chats = () => {
 			console.log("fetching messages");
 			const response = await axios.get(path);
 			setMessages(response.data);
-			localStorage.setItem("messages", JSON.stringify(response.data)); 
+			localStorage.setItem("messages", JSON.stringify(response.data));
 		} else {
 			console.log("using local storage");
 			setMessages(JSON.parse(tmpMsg));
@@ -65,55 +91,62 @@ const chats = () => {
 	//Handle infinite scroll
 
 	const isBottom = ([e]) => {
-        if(e === undefined) {
-            // console.log("e is undefined");
-        }
+		if (e === undefined) {
+			// console.log("e is undefined");
+		}
 		return e.getBoundingClientRect().bottom <= window.innerHeight;
 	};
 
-    const isTop = ([e]) => {
-        if(e === undefined) {
-            // console.log("e is undefined");
-        }
-        // console.log(e.getBoundingClientRect().top);
+	const isTop = ([e]) => {
+		if (e === undefined) {
+			// console.log("e is undefined");
+		}
+
+		// console.log(e.getBoundingClientRect().top);
 		return e.getBoundingClientRect().top === 0;
 	};
 
-    const refAssignCallback = ([e]) => {
-        if (e) {
-          //the containerRef is currently null, ref available = mounted.
-          var element = e;
-          var scrollWidth = element.scrollWidth;
-          var clientWidth = element.getBoundingClientRect().width;
-
-        } 
-    }
+	const refAssignCallback = ([e]) => {
+		if (e) {
+			//the containerRef is currently null, ref available = mounted.
+			var element = e;
+			var scrollWidth = element.scrollWidth;
+			var clientWidth = element.getBoundingClientRect().width;
+		}
+	};
 
 	const trackScrolling = () => {
-		const wrappedElement = window.document.getElementsByClassName("chat-container");
-        // console.log(wrappedElement);
+		const wrappedElement =
+			window.document.getElementsByClassName("chat-container");
+		// console.log(wrappedElement);
 		if (isBottom(wrappedElement)) {
 			console.log("header bottom reached");
 			// document.removeEventListener("scroll", trackScrolling);
-		} 
+		}
 
-        if (isTop(wrappedElement)) {
-            console.log("header top reached");
-            // document.removeEventListener("scroll", trackScrolling);
-        }
+		if (isTop(wrappedElement)) {
+			console.log("header top reached");
+			// document.removeEventListener("scroll", trackScrolling);
+		}
 	};
+
+	//Return the message element
 
 	return (
 		<div>
 			<div className='chat-container'>
 				<div className='chat-title'>Chat</div>
-				<div className='chat-messages'>
-					{messages.map((message) => {
-						return <ChatCells message={message} />;
-					})}
+				<div className='chat-group'>
+					{messages.map((message,index) => {
+                        if(displayChats.length === index + 1){
+						return <StyledChatCells key={message.id} message={message} ref = {lastChatRef} />;
+                        }else{
+                            return <StyledChatCells key={message.id} message={message}/>;
+                        }
+                    })}
 				</div>
 				{/* Refractor this into component */}
-				<div className='chat-input' ref = {divRef}>
+				<div className='chat-input' ref={divRef} >
 					<ChatInputs
 						handleSendMessage={handleSendMessage}
 						sendMessage={sendMessage}
