@@ -12,6 +12,7 @@ import ChatInputs from "../components/ChatInputs";
 import useChats from "../hooks/useChats";
 import StyledChatCells from "../components/StyledChatCellsDiv";
 import StyledTitle from "../components/StyledTitle";
+import StyledScroll from "../components/StyleScroll";
 
 const path = "http://localhost:3000/messages";
 
@@ -125,7 +126,7 @@ const chats = () => {
 		<div>
 			<div className='chat-container'>
 				<StyledTitle className='chat-title'>Chat with A</StyledTitle>
-				<div className='chat-group'>
+				<StyledScroll className='chat-group'>
 					{displayChats.map((message, index) => {
 						if (displayChats.length === index + 1) {
 							return (
@@ -144,7 +145,7 @@ const chats = () => {
 							);
 						}
 					})}
-				</div>
+				</StyledScroll>
 				{/* Refractor this into component */}
 				<div className='chat-input' ref={divRef}>
 					<ChatInputs
