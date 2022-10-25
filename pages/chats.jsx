@@ -23,6 +23,7 @@ const chats = () => {
 	const { displayChats, hasMore, loading, fetchData } = useChats(messages, position);
 	const divRef = useRef(null);
 	const observer = useRef();
+	const [reloadPage, setReloadPage] = useState(false);
 
 	const lastChatRef = useCallback(
 		(node) => {
@@ -73,6 +74,7 @@ const chats = () => {
 			JSON.stringify([...messages, newMessage])
 		);
 		setSendMessage("");
+		window.location.reload();
 	};
 
 	//Fetch message when rendering the component
@@ -80,16 +82,19 @@ const chats = () => {
 
 	const onMessageChange = (e) => {
 		setSendMessage(e.target.value);
-		// fetchData();
 	};
 
 	useEffect(() => {
-		fetchMessages();
+		
 		document.addEventListener("scroll", trackScrolling);
 		return () => {
 			document.removeEventListener("scroll", trackScrolling);
 		};
-	}, []);
+	}, );
+
+	useEffect(() => {
+		fetchMessages();
+	},[reloadPage]);
 
 	useEffect(() => {
 		console.log(`display chat ${displayChats.length}`);
@@ -115,7 +120,6 @@ const chats = () => {
 			window.document.getElementsByClassName("chat-container");
 	
 		if (isTop(wrappedElement)) {
-			alert('im at the top');
 			setPosition((prevPosition) => prevPosition + 10);
 		}
 	};
@@ -127,7 +131,8 @@ const chats = () => {
 			<div className='chat-container'>
 				<StyledTitle className='chat-title'>Chat with A</StyledTitle>
 				<StyledScroll className='chat-group'>
-					{displayChats.map((message, index) => {
+					{
+					displayChats.map((message, index) => {
 						if (displayChats.length === index + 1) {
 							return (
 								<ChatCells

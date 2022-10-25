@@ -7,9 +7,10 @@ const useChats = (query,position) => {
 	const [loading, setLoading] = useState(true);
 	
 	const fetchData = () => {
-		query.map((chat, index) => {
+		query.slice(0).reverse().map((chat, index) => {
 			if (index < position + limit) {
 				displayChats.push(chat);
+				console.log(chat);
 			}
 		});
 	};
@@ -22,9 +23,6 @@ const useChats = (query,position) => {
         setHasMore(query.length > displayChats.length)
         setLoading(false)
 	},[query,position]);
-
-
-
 
 	return { displayChats, hasMore, loading, fetchData };
 };
