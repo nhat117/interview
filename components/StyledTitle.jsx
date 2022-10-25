@@ -5,6 +5,7 @@ const StyledTitle = styled('h1', {
     color: 'royalblue',
     fontWeight: 'bold',
     marginBottom: '10px',
+    padding: '10px',
     });
 
 export default StyledTitle;

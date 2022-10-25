@@ -10,6 +10,7 @@ import ChatCells from "../components/ChatCells";
 import ChatInputs from "../components/ChatInputs";
 import useChats from "../hooks/useChats";
 import StyledChatCells from "../components/StyledChatCells";
+import StyledTitle from "../components/StyledTitle";
 
 const path = "http://localhost:3000/messages";
 
@@ -135,13 +136,13 @@ const chats = () => {
 	return (
 		<div>
 			<div className='chat-container'>
-				<div className='chat-title'>Chat</div>
+				<StyledTitle className='chat-title'>Chat with A</StyledTitle>
 				<div className='chat-group'>
 					{messages.map((message,index) => {
                         if(displayChats.length === index + 1){
-						return <StyledChatCells key={message.id} message={message} ref = {lastChatRef} />;
+						return <ChatCells key={message.id} message={message} ref = {lastChatRef} />;
                         }else{
-                            return <StyledChatCells key={message.id} message={message}/>;
+                            return <ChatCells key={message.id} message={message}/>;
                         }
                     })}
 				</div>
