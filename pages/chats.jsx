@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, {
 	useContext,
 	useEffect,
@@ -35,7 +36,6 @@ const chats = () => {
 		},
 		[loading, hasMore]
 	);
-
 
 	useEffect(() => {
 		divRef.current.scrollIntoView({ behavior: "smooth" });
@@ -89,22 +89,14 @@ const chats = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		console.log(`display chat ${displayChats}`);
+	}, [displayChats]);
+
 	//Handle infinite scroll
 
-	const isBottom = ([e]) => {
-		if (e === undefined) {
-			// console.log("e is undefined");
-		}
-		return e.getBoundingClientRect().bottom <= window.innerHeight;
-	};
-
 	const isTop = ([e]) => {
-		if (e === undefined) {
-			// console.log("e is undefined");
-		}
-
-		// console.log(e.getBoundingClientRect().top);
-		return e.getBoundingClientRect().top === 0;
+		return e.getBoundingClientRect().top === 8;
 	};
 
 	const refAssignCallback = ([e]) => {
@@ -119,15 +111,12 @@ const chats = () => {
 	const trackScrolling = () => {
 		const wrappedElement =
 			window.document.getElementsByClassName("chat-container");
-		// console.log(wrappedElement);
-		if (isBottom(wrappedElement)) {
-			console.log("header bottom reached");
-			// document.removeEventListener("scroll", trackScrolling);
-		}
 
 		if (isTop(wrappedElement)) {
-			console.log("header top reached");
-			// document.removeEventListener("scroll", trackScrolling);
+			alert('í am at the top');
+			if(position < messages.length){
+				setPosition((prevPosition) => prevPosition +2);
+			}
 		}
 	};
 
@@ -138,16 +127,27 @@ const chats = () => {
 			<div className='chat-container'>
 				<StyledTitle className='chat-title'>Chat with A</StyledTitle>
 				<div className='chat-group'>
-					{messages.map((message,index) => {
-                        if(displayChats.length === index + 1){
-						return <ChatCells key={message.id} message={message} ref = {lastChatRef} />;
-                        }else{
-                            return <ChatCells key={message.id} message={message}/>;
-                        }
-                    })}
+					{displayChats.map((message, index) => {
+						if (displayChats.length === index + 1) {
+							return (
+								<ChatCells
+									key={message?.id}
+									message={message}
+									ref={lastChatRef}
+								/>
+							);
+						} else {
+							return (
+								<ChatCells
+									key={message?.id}
+									message={message}
+								/>
+							);
+						}
+					})}
 				</div>
 				{/* Refractor this into component */}
-				<div className='chat-input' ref={divRef} >
+				<div className='chat-input' ref={divRef}>
 					<ChatInputs
 						handleSendMessage={handleSendMessage}
 						sendMessage={sendMessage}
