@@ -1,22 +1,34 @@
 import React from "react";
-import StyledChatCells from "./StyledChatCells";
+import StyledChatCellsDiv from "./StyledChatCellsDiv";
 const ChatCells = (props) => {
 	const message = props.message;
-    if(message.sender === 'A') {
+	if (message.sender === "A") {
 		return (
-			<StyledChatCells className='chat-message chat'>
-				<StyledChatCells className='chat-message-user'>{message.sender}</StyledChatCells>
-				<StyledChatCells className='chat-message-time'>{message.timestamp}</StyledChatCells>
-				<StyledChatCells className='chat-message-text'>{message.content}</StyledChatCells>
-			</StyledChatCells>
+			<StyledChatCellsDiv className='chat-message chat'>
+				<StyledChatCellsDiv className='chat-message-user'>
+					{message.sender}
+				</StyledChatCellsDiv>
+				<StyledChatCellsDiv className='chat-message-time'>
+					{message.timestamp}
+				</StyledChatCellsDiv>
+				<StyledChatCellsDiv className='chat-message-text'>
+					{message.content}
+				</StyledChatCellsDiv>
+			</StyledChatCellsDiv>
 		);
 	} else {
 		return (
-			<StyledChatCells className='chat-message-client chat'>
-				<StyledChatCells className='chat-message-user'>{message.sender}</StyledChatCells>
-				<StyledChatCells className='chat-message-time'>{message.timestamp}</StyledChatCells>
-				<StyledChatCells className='chat-message-text'>{message.content}</StyledChatCells>
-			</StyledChatCells>
+			<StyledChatCellsDiv className='chat-message-client chat'>
+				<StyledChatCellsDiv className='chat-message-user'>
+					{message.sender}
+				</StyledChatCellsDiv>
+				<StyledChatCellsDiv className='chat-message-time'>
+					{message.timestamp}
+				</StyledChatCellsDiv>
+				<StyledChatCellsDiv className='chat-message-text'>
+					{message.content}
+				</StyledChatCellsDiv>
+			</StyledChatCellsDiv>
 		);
 	}
 };

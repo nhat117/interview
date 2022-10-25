@@ -1,7 +1,7 @@
 import {styled} from '@stitches/react';
 import React from 'react';
 
-const StyledChatCells = styled('div', {
+const StyledChatCellsDiv = styled('div', {
     '&.chat': {
         position: 'relative',
         maxWidth: '60%',
@@ -21,4 +21,4 @@ const StyledChatCells = styled('div', {
     },
 });
 
-export default StyledChatCells;
+export default StyledChatCellsDiv;

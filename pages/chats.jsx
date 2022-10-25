@@ -9,7 +9,7 @@ import axios from "axios";
 import ChatCells from "../components/ChatCells";
 import ChatInputs from "../components/ChatInputs";
 import useChats from "../hooks/useChats";
-import StyledChatCells from "../components/StyledChatCells";
+import StyledChatCells from "../components/StyledChatCellsDiv";
 import StyledTitle from "../components/StyledTitle";
 
 const path = "http://localhost:3000/messages";
