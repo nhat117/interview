@@ -6,18 +6,27 @@ const useChats = (query,position) => {
 	const [hasMore, setHasMore] = useState(false);
 	const [loading, setLoading] = useState(true);
 	
-	useEffect(() => {
-		setLoading(true);
+	const fetchData = () => {
 		query.map((chat, index) => {
 			if (index < position + limit) {
 				displayChats.push(chat);
 			}
 		});
+	};
+
+	useEffect(() => {
+		setLoading(true);
+		fetchData();
+		//Remove duplicate element
+		setDisplayChats(Array.from(new Set([...displayChats])));
         setHasMore(query.length > displayChats.length)
         setLoading(false)
 	},[query,position]);
 
-	return { displayChats, hasMore, loading };
+
+
+
+	return { displayChats, hasMore, loading, fetchData };
 };
 
 export default useChats;

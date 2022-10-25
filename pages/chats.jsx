@@ -19,7 +19,7 @@ const chats = () => {
 	const [messages, setMessages] = useState([]);
 	const [sendMessage, setSendMessage] = useState("");
 	const [position, setPosition] = useState(0);
-	const { displayChats, hasMore, loading } = useChats(messages, position);
+	const { displayChats, hasMore, loading, fetchData } = useChats(messages, position);
 	const divRef = useRef(null);
 	const observer = useRef();
 
@@ -79,6 +79,7 @@ const chats = () => {
 
 	const onMessageChange = (e) => {
 		setSendMessage(e.target.value);
+		// fetchData();
 	};
 
 	useEffect(() => {
@@ -90,7 +91,7 @@ const chats = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(`display chat ${displayChats}`);
+		console.log(`display chat ${displayChats.length}`);
 	}, [displayChats]);
 
 	//Handle infinite scroll
@@ -111,12 +112,10 @@ const chats = () => {
 	const trackScrolling = () => {
 		const wrappedElement =
 			window.document.getElementsByClassName("chat-container");
-
+	
 		if (isTop(wrappedElement)) {
-			alert('í am at the top');
-			if(position < messages.length){
-				setPosition((prevPosition) => prevPosition +2);
-			}
+			alert('im at the top');
+			setPosition((prevPosition) => prevPosition + 10);
 		}
 	};
 
