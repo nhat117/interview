@@ -1,5 +1,39 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Challenge
+```
+- Build a mini chat app using NextJS:
+     - 2 pages: Home and chat
+- Home:
+
+     - Display 1 image using Image optimization from Next framework
+     - A button that will redirect user to the chat page using routing mechanism from Next
+
+- Chat:
+
+     - Display chat name of the sender, content of the message
+     - Data of the message is included in data.json
+     - You must add more messages (> 20)
+     - Save the data in localStorage
+     - Input field to enter new message
+     - Button to send new message
+     - Do not load all messages when init -> scroll to top to load more
+     - On init -> scroll to latest message
+
+- Styling:
+
+     - Feel free to style in your own design but this will not be marked as an important skill
+     - All CSS must be written in Stitches (CSS in JS Framework)
+
+- Coding convention:
+     - Clean code
+     - Reusable components must live inside components folder
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+The goal of this test is to test your adaptability to new technologies as well as your coding skill. Happy hacking!
+```
+
 ## Getting Started
 
 First, run the development server:
